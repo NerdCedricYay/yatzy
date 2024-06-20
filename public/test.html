@@ -3,17 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yahtzee</title>
-    <!-- Load the JavaScript files -->
-    <script src="dice.js" defer></script>
-    <script src="yatzy_game.js" defer></script>
-    <script src="yatzy_engine.js" defer></script>
+    <title>Yahtzee Game</title>
+    <script src="assets/yatzy_game.js" defer></script>
+    <script src="assets/yatzy_engine.js" defer></script>
+    <script src="assets/dice.js" defer></script>
+    <style>
+        #diceContainer {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .die {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        .kept {
+            border: 2px solid red;
+        }
+        #scoresheet {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            margin-top: 20px;
+            gap: 10px;
+        }
+        #scoresheet div {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        #scoreDisplay {
+            margin-top: 20px;
+        }
+        .scored {
+            background-color: lightgray;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
-    <h1>Yahtzee</h1>
+    <h1>Yahtzee Game</h1>
     <div>
         <button id="rollDiceButton">Roll Dice</button>
+        <div id="currentRollText">Current Roll: 0</div>
         <div id="diceContainer"></div>
+        <div id="scoresheet">
+            <div>1's</div>
+            <div>2's</div>
+            <div>3's</div>
+            <div>4's</div>
+            <div>5's</div>
+            <div>6's</div>
+            <div data-score="ones"></div>
+            <div data-score="twos"></div>
+            <div data-score="threes"></div>
+            <div data-score="fours"></div>
+            <div data-score="fives"></div>
+            <div data-score="sixes"></div>
+        </div>
+        <div id="scoreDisplay">Score: 0</div>
     </div>
 </body>
 </html>
