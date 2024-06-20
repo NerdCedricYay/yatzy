@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yahtzee Game</title>
+    <!-- Load the JavaScript files in the correct order -->
     <script src="assets/yatzy_game.js" defer></script>
     <script src="assets/yatzy_engine.js" defer></script>
     <script src="assets/dice.js" defer></script>
@@ -19,11 +20,11 @@
             cursor: pointer;
         }
         .kept {
-            border: 2px solid red;
+            border: 2px solid rgb(3, 68, 247);
         }
         #scoresheet {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(13, 1fr);
             margin-top: 20px;
             gap: 10px;
         }
@@ -37,7 +38,7 @@
             margin-top: 20px;
         }
         .scored {
-            background-color: lightgray;
+            background-color: rgb(237, 196, 196);
             cursor: not-allowed;
         }
     </style>
@@ -55,12 +56,26 @@
             <div>4's</div>
             <div>5's</div>
             <div>6's</div>
+            <div>3 of a Kind</div>
+            <div>4 of a Kind</div>
+            <div>Full House</div>
+            <div>Small Straight</div>
+            <div>Large Straight</div>
+            <div>Yahtzee</div>
+            <div>Chance</div>
             <div data-score="ones"></div>
             <div data-score="twos"></div>
             <div data-score="threes"></div>
             <div data-score="fours"></div>
             <div data-score="fives"></div>
             <div data-score="sixes"></div>
+            <div data-score="threeOfAKind"></div>
+            <div data-score="fourOfAKind"></div>
+            <div data-score="fullHouse"></div>
+            <div data-score="smallStraight"></div>
+            <div data-score="largeStraight"></div>
+            <div data-score="yahtzee"></div>
+            <div data-score="chance"></div>
         </div>
         <div id="scoreDisplay">Score: 0</div>
     </div>

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameState.diceValues.forEach((result, index) => {
             const dieElement = document.createElement('img');
             dieElement.className = 'die';
-            dieElement.src = `assets/dice/dice_${result}.png`;
+            dieElement.src = `docs/dice/dice_${result}.png`;
             dieElement.alt = `Die showing ${result}`;
             dieElement.addEventListener('click', () => {
                 game.toggleKeep(index);
@@ -33,6 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreDisplay.textContent = `Score: ${score}`;
     }
 
+    function checkGameCompletion() {
+        const scoreCells = document.querySelectorAll('#scoresheet div[data-score]');
+        const allScored = Array.from(scoreCells).every(cell => cell.classList.contains('scored'));
+        if (allScored) {
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            scoreDisplay.style.backgroundColor = 'yellow';
+            alert(`Game Over! Your final score is: ${game.score}`);
+        }
+    }
+
     function handleScoreSubmission(scoreBox) {
         if (game.scoreSheet[scoreBox] === undefined) {
             game.scoreTurn(scoreBox);
@@ -43,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             game.resetGame();
             displayDice(game.getGameState());
             updateRollText(game.currentRoll);
+            checkGameCompletion(); 
         }
     }
 
@@ -57,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         game.rollDice();
         displayDice(game.getGameState());
         updateRollText(game.currentRoll);
-        console.log('Dice Rolled');
+        console.log('Roll Dice button clicked');
     });
 
     updateRollText(game.currentRoll);
