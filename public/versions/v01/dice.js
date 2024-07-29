@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameState.diceValues.forEach((result, index) => {
             const dieElement = document.createElement('img');
             dieElement.className = 'die';
-            dieElement.src = `docs/dice/dice_${result}.png`;
+            dieElement.src = `../../docs/dice/dice_${result}.png`;
             dieElement.alt = `Die showing ${result}`;
             dieElement.addEventListener('click', () => {
                 game.toggleKeep(index);
