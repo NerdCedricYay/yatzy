@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS["appDir"] = resolve_path("app");
+$GLOBALS["appDir"] = resolve_path("public/app");
 
 function resolve_path($name)
 {

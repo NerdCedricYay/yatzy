@@ -1,43 +1,40 @@
 <?php
+require_once('_config.php');
+?>
 
-require_once '_config.php';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roll Test</title>
+    <script src="/assets/jquery-3.7.1.min.js"></script>
+</head>
+<body>
 
-use Yatzy\Dice;
-use Yatzy\YatzyGame;
-use Yatzy\YatzyEngine;
+<div id="die1">--</div>
+<button id="roll">Roll</button>
 
-// Test autoloading
-$dice = new Dice();
-$yatzyGame = new YatzyGame();
-$yatzyEngine = new YatzyEngine();
+<script>
+console.log('jQuery version:', $.fn.jquery);
 
-// Test YatzyGame
-echo "<h2>Testing YatzyGame</h2>";
+const die1 = $("#die1");
+const roll = $("#roll");
 
-// Roll the dice and display their values
-echo "<h3>Initial Roll</h3>";
-$yatzyGame->rollDice();
-echo "Dice Values: " . implode(', ', $yatzyGame->diceValues) . "<br>";
+roll.on("click", function() {
+  $.ajax({
+    type: "GET",
+    url: "/api.php?action=roll",
+    success: function(data) {
+      console.log('AJAX response:', data);
+      die1.html(data.value);
+    },
+    error: function(xhr, status, error) {
+      console.error('AJAX error:', status, error);
+    }
+  });
+});
+</script>
 
-// Toggle keeping some dice and roll again
-$yatzyGame->toggleKeep(0); // Toggle keeping the first dice
-$yatzyGame->rollDice();
-echo "<h3>After 2nd Roll</h3>";
-echo "Dice Values: " . implode(', ', $yatzyGame->diceValues) . "<br>";
-
-// Test YatzyEngine
-echo "<h2>Testing YatzyEngine</h2>";
-
-// Test scoring for ones
-echo "<h3>Scoring Ones</h3>";
-$scoreOnes = $yatzyEngine->scoreTurn($yatzyGame, 'ones');
-echo "Score for Ones: {$scoreOnes}<br>";
-
-// Test scoring for full house
-echo "<h3>Scoring Full House</h3>";
-$yatzyGame->diceValues = [1, 1, 2, 2, 2]; // Simulate dice values for full house
-$scoreFullHouse = $yatzyEngine->scoreTurn($yatzyGame, 'fullHouse');
-echo "Score for Full House: {$scoreFullHouse}<br>";
-
-// Completion Message
-echo "<p>Tests completed successfully!</p>";
+</body>
+</html>

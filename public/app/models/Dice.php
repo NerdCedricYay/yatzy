@@ -1,5 +1,4 @@
 <?php
-
 namespace Yatzy;
 class Dice
 {
@@ -8,6 +7,7 @@ class Dice
     public function roll()
     {
         $this->value = rand(1, 6);
+        return $this->value;
     }
 
     public function getValue()
