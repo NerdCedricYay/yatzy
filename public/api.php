@@ -14,5 +14,4 @@ default:
     $data = ["version" => "1.0"];
 }
 
-header("Content-Type: application/json");
 echo json_encode($data);
