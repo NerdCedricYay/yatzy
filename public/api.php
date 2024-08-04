@@ -16,11 +16,14 @@ switch ($action) {
         $input = json_decode(file_get_contents('php://input'), true);
         $name = $input['player_name'];
         $score = $input['score'];
-
-        $stmt = $pdo->prepare('INSERT INTO high_scores (player_name, score) VALUES (:player_name, :score)');
-        $stmt->execute(['player_name' => $name, 'score' => $score]);
+        $timestamp = date('Y-m-d H:i:s'); // Current timestamp
+    
+        // Prepare and execute the insert statement
+        $stmt = $pdo->prepare('INSERT INTO high_scores (player_name, score, date_achieved) VALUES (:player_name, :score, :date_achieved)');
+        $stmt->execute(['player_name' => $name, 'score' => $score, 'date_achieved' => $timestamp]);
+    
         $data = ["status" => "success"];
-        break;
+        break;    
 
     case "get_high_scores":
         $stmt = $pdo->query('SELECT player_name, score, date_achieved FROM high_scores ORDER BY score DESC, date_achieved ASC LIMIT 10');

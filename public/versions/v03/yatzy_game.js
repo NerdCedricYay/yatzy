@@ -1,19 +1,37 @@
 class YatzyGame {
     constructor() {
-        this.resetGame();
+        this.resetRolls();
+        console.log('Game initialized');
         this.scoreSheet = {};
         this.score = 0;
         this.bonus = 0;
-        console.log('Game initialized');
     }
 
-    resetGame() {
+    resetRolls() {
         this.currentRoll = 0; 
         this.diceValues = [0, 0, 0, 0, 0]; 
         this.diceKeep = [false, false, false, false, false]; 
         console.log('Game reset');
     }
 
+    resetGame() {
+        this.resetRolls();
+        console.log('Game initialized');
+        this.scoreSheet = {};
+        this.score = 0;
+        this.bonus = 0;
+    
+        // Reset the score boxes
+        const scoreCells = document.querySelectorAll('#scoresheet div[data-score]');
+        scoreCells.forEach(cell => {
+            cell.textContent = '';  // Clear any text
+            cell.classList.remove('scored');  // Remove the scored class
+        });
+    
+        // Reset the display elements
+        document.getElementById('scoreDisplay').textContent = 'Score: 0';
+    }    
+    
     rollDice() {
         if (this.currentRoll < 3) {
             for (let i = 0; i < 5; i++) {
