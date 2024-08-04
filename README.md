@@ -50,9 +50,9 @@ Finally, test.html provides the HTML structure for the Yatzy game, including but
 
 # Verion 2 (Assignment 3)
 
-This version of the game uses AJAX requests to interact with the server for dice rolling and scoring.
+This version of the game uses AJAX requests to interact with the server for dice rolling and scoring. It also uses JQuery querying.
 
-dice.js, yatzy_engine, and yatzy_game maintains their rolls but this time sends AJAC requests to the server and handle the response
+dice.js, yatzy_engine, and yatzy_game maintains their rolls but this time sends AJAX requests to the server and handle the response
 
 rollDice(callback): Sends a GET request to /api.php?action=roll to roll the dice. On a successful response, it invokes the callback function with the dice values received from the server.
 
@@ -66,5 +66,19 @@ This setup allows for dynamic interactions with the server using AJAX, updating 
 
 # Verion 3 (Assignment 4)
 
+This version uses a postgreSQL database to store information on the game's leaderboard, which displays the top 10 scores. This version has all the same feautures and classes as version 1, with a few crucial extra classes.
 
+Database.php establishes a connection to the PostgreSQL database.
 
+api.php handles API requests, interacts with the database, and returns JSON responses.
+
+Key Components:
+
+The Submit Score function parses JSON input from the request body to get the player's name and score. It then executes an SQL INSERT statement to add a new high score to the high_scores table.
+
+dice.js was also in version 1, but in addition to the handling the rolling mechanics, dice.js handles the client-side logic for submitting scores and fetching the leaderboard.
+
+- checkGameCompletion() checks if all score cells are marked as scored. If the game is complete, it prompts the user for their name and submits the score to the server using a POST request to api.php?action=submit_score.
+- handleScoreSubmission(scoreBox) handles scoring a turn, updating the score display, marking the score cell as scored, and checking for game completion.
+- fetchTopScores() fetches the top scores from the server using a GET request to api.php?action=get_high_scores.
+- When the game is complete, the html will prompt the user for their name and submits the score to the server.
