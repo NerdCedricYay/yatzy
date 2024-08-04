@@ -40,6 +40,13 @@
             background-color: rgb(237, 196, 196);
             cursor: not-allowed;
         }
+        #leaderboard {
+            margin-top: 20px;
+            border: 1px solid black;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +84,10 @@
             <div data-score="chance"></div>
         </div>
         <div id="scoreDisplay">Score: 0</div>
+        <div id="leaderboard">
+            <h2>Top 10 Scores</h2>
+            <div id="leaderboardContent">Loading...</div>
+        </div>
     </div>
 </body>
 </html>

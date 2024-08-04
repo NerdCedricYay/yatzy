@@ -5,11 +5,10 @@ class Database {
     private $db = 'yatzy';
     private $user = 'postgres';
     private $pass = 'pgSh1zue!!admin';
-    private $charset = 'utf8';
     private $pdo;
 
     public function __construct() {
-        $dsn = "pgsql:host=$this->host;dbname=$this->db;charset=$this->charset";
+        $dsn = "pgsql:host=$this->host;dbname=$this->db"; // Removed charset
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -17,8 +16,9 @@ class Database {
         ];
         try {
             $this->pdo = new PDO($dsn, $this->user, $this->pass, $options);
+            echo "Connection successful!";
         } catch (\PDOException $e) {
-            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+            echo "Connection failed: " . $e->getMessage();
         }
     }
 

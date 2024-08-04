@@ -1,4 +1,8 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Allows requests from any origin
+header("Access-Control-Allow-Methods: GET, POST"); // Allows GET and POST methods
+header("Access-Control-Allow-Headers: Content-Type"); // Allows Content-Type header
+
 require_once('_config.php');
 
 use Yatzy\Database;
@@ -16,14 +20,15 @@ switch ($action) {
         $input = json_decode(file_get_contents('php://input'), true);
         $name = $input['player_name'];
         $score = $input['score'];
-        $timestamp = date('Y-m-d H:i:s'); // Current timestamp
-    
-        // Prepare and execute the insert statement
-        $stmt = $pdo->prepare('INSERT INTO high_scores (player_name, score, date_achieved) VALUES (:player_name, :score, :date_achieved)');
-        $stmt->execute(['player_name' => $name, 'score' => $score, 'date_achieved' => $timestamp]);
-    
-        $data = ["status" => "success"];
-        break;    
+
+        $stmt = $pdo->prepare('INSERT INTO high_scores (player_name, score, date_achieved) VALUES (:player_name, :score, NOW())');
+        try {
+            $stmt->execute(['player_name' => $name, 'score' => $score]);
+            $data = ["status" => "success"];
+        } catch (Exception $e) {
+            $data = ["status" => "error", "message" => $e->getMessage()];
+        }
+        break;
 
     case "get_high_scores":
         $stmt = $pdo->query('SELECT player_name, score, date_achieved FROM high_scores ORDER BY score DESC, date_achieved ASC LIMIT 10');

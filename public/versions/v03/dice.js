@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   .then(data => {
                       if (data.status === 'success') {
                           console.log('Score submitted successfully');
+                          fetchTopScores(); // Fetch and display top scores after successful submission
                       } else {
                           console.error('Error submitting score:', data.message);
                       }
@@ -89,6 +90,27 @@ document.addEventListener('DOMContentLoaded', () => {
             updateRollText(game.currentRoll);
             checkGameCompletion(); 
         }
+    }
+
+    function fetchTopScores() {
+        fetch('../../api.php?action=get_high_scores')
+            .then(response => response.json())
+            .then(data => {
+                const leaderboardContent = document.getElementById('leaderboardContent');
+                if (Array.isArray(data)) {
+                    let leaderboardHtml = '';
+                    data.forEach((score, index) => {
+                        leaderboardHtml += `<div>${index + 1}. ${score.player_name} - ${score.score} (Date: ${score.date_achieved})</div>`;
+                    });
+                    leaderboardContent.innerHTML = leaderboardHtml;
+                } else {
+                    leaderboardContent.innerHTML = 'Error fetching leaderboard data';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching top scores:', error);
+                document.getElementById('leaderboardContent').innerHTML = 'Error fetching leaderboard data';
+            });
     }
 
     document.querySelectorAll('#scoresheet div[data-score]').forEach(cell => {
